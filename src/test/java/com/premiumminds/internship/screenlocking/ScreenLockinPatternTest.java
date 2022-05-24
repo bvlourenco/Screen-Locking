@@ -58,6 +58,18 @@ public class ScreenLockinPatternTest {
   }
 
   @Test
+  public void ScreenLockinPatternTestFirstNeg1Length2Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(-1, 2, 0);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst11Length2Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(11, 2, 0);
+  }
+
+  @Test
   public void ScreenLockinPatternTestFirst3Length2Test()
       throws InterruptedException, ExecutionException, TimeoutException {
     executeTest(3, 2, 5);
