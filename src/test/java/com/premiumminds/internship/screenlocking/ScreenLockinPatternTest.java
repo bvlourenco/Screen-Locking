@@ -26,7 +26,7 @@ public class ScreenLockinPatternTest {
   public ScreenLockinPatternTest() {
   }
 
-  public void executeTest(int firstPoint, int length, int expectedResult) 
+  public void executeTest(int firstPoint, int length, int expectedResult)
       throws InterruptedException, ExecutionException, TimeoutException {
     Future<Integer> count = new ScreenLockinPattern().countPatternsFrom(firstPoint, length);
     Integer result = count.get(10, TimeUnit.SECONDS);
@@ -80,13 +80,13 @@ public class ScreenLockinPatternTest {
       throws InterruptedException, ExecutionException, TimeoutException {
     executeTest(2, 2, 7);
   }
-  
+
   @Test
   public void ScreenLockinPatternTestFirst5Length2Test()
       throws InterruptedException, ExecutionException, TimeoutException {
     executeTest(5, 2, 8);
   }
-  
+
   @Test
   public void ScreenLockinPatternTestFirst3Length3Test()
       throws InterruptedException, ExecutionException, TimeoutException {
@@ -98,7 +98,7 @@ public class ScreenLockinPatternTest {
       throws InterruptedException, ExecutionException, TimeoutException {
     executeTest(5, 3, 48);
   }
-  
+
   @Test
   public void ScreenLockinPatternTestFirst5Length4Test()
       throws InterruptedException, ExecutionException, TimeoutException {

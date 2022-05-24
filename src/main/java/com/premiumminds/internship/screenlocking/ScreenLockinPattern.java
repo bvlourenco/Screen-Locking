@@ -24,7 +24,8 @@ class ScreenLockinPattern implements IScreenLockinPattern {
   }
 
   /**
-   * Method to initialize a map containing each node as key and its neighbours as values
+   * Method to initialize a map containing each node as key and its neighbours as
+   * values
    */
   public void initNeighbours() {
     for (Integer i = 1; i <= NUM_ELEMS; i++) {
@@ -53,26 +54,26 @@ class ScreenLockinPattern implements IScreenLockinPattern {
   /**
    * Method to add new neighbours to nodes after a given node was visited
    * (in order to follow rule 4 which states that in a pattern we can pass
-   *  over used points)
+   * over used points)
    */
   public void addUsedPointNeighbours() {
     for (Integer i = 1; i <= NUM_ELEMS; i++) {
       neighbours.get(i).emptyUsedPointNeighbour();
     }
 
-    //Visited[1] represents node 2
+    // Visited[1] represents node 2
     if (visited[1]) {
       neighbours.get(1).addUsedPointNeighbour(3);
       neighbours.get(3).addUsedPointNeighbour(1);
     }
 
-    //Visited[3] represents node 4
+    // Visited[3] represents node 4
     if (visited[3]) {
       neighbours.get(1).addUsedPointNeighbour(7);
       neighbours.get(7).addUsedPointNeighbour(1);
     }
 
-    //Visited[4] represents node 5
+    // Visited[4] represents node 5
     if (visited[4]) {
       neighbours.get(1).addUsedPointNeighbour(9);
       neighbours.get(2).addUsedPointNeighbour(8);
@@ -84,13 +85,13 @@ class ScreenLockinPattern implements IScreenLockinPattern {
       neighbours.get(9).addUsedPointNeighbour(1);
     }
 
-    //Visited[5] represents node 6
+    // Visited[5] represents node 6
     if (visited[5]) {
       neighbours.get(3).addUsedPointNeighbour(9);
       neighbours.get(9).addUsedPointNeighbour(3);
     }
 
-    //Visited[7] represents node 8
+    // Visited[7] represents node 8
     if (visited[7]) {
       neighbours.get(7).addUsedPointNeighbour(9);
       neighbours.get(9).addUsedPointNeighbour(7);
@@ -111,21 +112,25 @@ class ScreenLockinPattern implements IScreenLockinPattern {
       return length;
     }
 
-    /*After a node was visited, check for neighbours of visited nodes
-      because a pattern can pass over a used point*/
+    /*
+     * After a node was visited, check for neighbours of visited nodes
+     * because a pattern can pass over a used point
+     */
     addUsedPointNeighbours();
     ArrayList<Integer> neighs = neighbours.get(firstPoint).getAllNeighbours();
 
     Integer numPattterns = 0;
     visited[firstPoint - 1] = true;
     for (int i = 0; i < neighs.size(); i++) {
-      if (!visited[neighs.get(i) - 1]) {  
+      if (!visited[neighs.get(i) - 1]) {
         numPattterns += countPatterns(neighs.get(i), length - 1);
       }
     }
-    /*After the end of the recursion for a given call, other possibilities of
-      patterns will be explored, so the visited point can be visited again
-      in another combination*/
+    /*
+     * After the end of the recursion for a given call, other possibilities of
+     * patterns will be explored, so the visited point can be visited again
+     * in another combination
+     */
     visited[firstPoint - 1] = false;
     return numPattterns;
   }

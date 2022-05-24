@@ -11,7 +11,7 @@ public class Neighbours {
     }
 
     /**
-     * Method that joins adjacent neighbours of the node and neighbours 
+     * Method that joins adjacent neighbours of the node and neighbours
      * of visited nodes and returns its result
      * 
      * @return all neighbours of current node
