@@ -15,143 +15,75 @@ class ScreenLockinPattern implements IScreenLockinPattern {
   private static final int NUM_ELEMS = 9;
 
   private ExecutorService executor = Executors.newSingleThreadExecutor();
-  private Map<Integer, ArrayList<Integer>> neighbours = new HashMap<>();
+  private Map<Integer, Neighbours> neighbours = new HashMap<>();
   Boolean[] visited = new Boolean[NUM_ELEMS];
 
   public ScreenLockinPattern() {
     Arrays.fill(visited, Boolean.FALSE);
+    initNeighbours();
+  }
+
+  public void initNeighbours() {
     for (Integer i = 1; i <= NUM_ELEMS; i++) {
-      if (i.equals(1) || i.equals(3) || i.equals(7) || i.equals(9)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(2, 4, 5, 6, 8)));
-      } else if (i.equals(2) || i.equals(8)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 3, 4, 5, 6, 7, 9)));
-      } else if (i.equals(4) || i.equals(6)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 2, 3, 5, 7, 8, 9 )));
-      } else if (i.equals(5)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9 )));
+      switch (i) {
+        case 5:
+          neighbours.put(i, new Neighbours(new ArrayList<>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9))));
+          break;
+        case 1:
+        case 3:
+        case 7:
+        case 9:
+          neighbours.put(i, new Neighbours(new ArrayList<>(Arrays.asList(2, 4, 5, 6, 8))));
+          break;
+        case 2:
+        case 8:
+          neighbours.put(i, new Neighbours(new ArrayList<>(Arrays.asList(1, 3, 4, 5, 6, 7, 9))));
+          break;
+        case 4:
+        case 6:
+          neighbours.put(i, new Neighbours(new ArrayList<>(Arrays.asList(1, 2, 3, 5, 7, 8, 9))));
+          break;
       }
     }
   }
 
   public void addUsedPointNeighbours() {
     for (Integer i = 1; i <= NUM_ELEMS; i++) {
-      if (i.equals(1) || i.equals(3) || i.equals(7) || i.equals(9)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(2, 4, 5, 6, 8)));
-      } else if (i.equals(2) || i.equals(8)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 3, 4, 5, 6, 7, 9)));
-      } else if (i.equals(4) || i.equals(6)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 2, 3, 5, 7, 8, 9 )));
-      } else if (i.equals(5)) {
-        neighbours.put(i, new ArrayList<>(Arrays.asList(1, 2, 3, 4, 6, 7, 8, 9 )));
-      }
+      neighbours.get(i).emptyUsedPointNeighbour();
     }
+
     if (visited[1]) {
-      ArrayList<Integer> nn = neighbours.get(1);
-      if (!nn.contains(3)) {
-        nn.add(3);
-      }
-      neighbours.put(1, nn);
-
-      nn = neighbours.get(3);
-      if (!nn.contains(1)) {
-        nn.add(1);
-      }
-      neighbours.put(3, nn);
+      neighbours.get(1).addUsedPointNeighbour(3);
+      neighbours.get(3).addUsedPointNeighbour(1);
     }
-    
-    if (visited[3]) {
-      ArrayList<Integer> nn = neighbours.get(1);
-      if (!nn.contains(7)) {
-        nn.add(7);
-      }
-      neighbours.put(1, nn);
 
-      nn = neighbours.get(7);
-      if (!nn.contains(1)) {
-        nn.add(1);
-      }
-      neighbours.put(7, nn);
+    if (visited[3]) {
+      neighbours.get(1).addUsedPointNeighbour(7);
+      neighbours.get(7).addUsedPointNeighbour(1);
     }
 
     if (visited[4]) {
-      ArrayList<Integer> nn = neighbours.get(1);
-      if (!nn.contains(9)) {
-        nn.add(9);
-      }
-      neighbours.put(1, nn);
-
-      nn = neighbours.get(2);
-      if (!nn.contains(8)) {
-        nn.add(8);
-      }
-      neighbours.put(2, nn);
-
-      nn = neighbours.get(3);
-      if (!nn.contains(7)) {
-        nn.add(7);
-      }
-      neighbours.put(3, nn);
-
-      nn = neighbours.get(4);
-      if (!nn.contains(6)) {
-        nn.add(6);
-      }
-      neighbours.put(4, nn);
-
-      nn = neighbours.get(6);
-      if (!nn.contains(4)) {
-        nn.add(4);
-      }
-      neighbours.put(6, nn);
-
-      nn = neighbours.get(7);
-      if (!nn.contains(3)) {
-        nn.add(3);
-      }
-      neighbours.put(7, nn);
-
-      nn = neighbours.get(8);
-      if (!nn.contains(2)) {
-        nn.add(2);
-      }
-      neighbours.put(8, nn);
-
-      nn = neighbours.get(9);
-      if (!nn.contains(1)) {
-        nn.add(1);
-      }
-      neighbours.put(9, nn);
+      neighbours.get(1).addUsedPointNeighbour(9);
+      neighbours.get(2).addUsedPointNeighbour(8);
+      neighbours.get(3).addUsedPointNeighbour(7);
+      neighbours.get(4).addUsedPointNeighbour(6);
+      neighbours.get(6).addUsedPointNeighbour(4);
+      neighbours.get(7).addUsedPointNeighbour(3);
+      neighbours.get(8).addUsedPointNeighbour(2);
+      neighbours.get(9).addUsedPointNeighbour(1);
     }
-    
+
     if (visited[5]) {
-      ArrayList<Integer> nn = neighbours.get(3);
-      if (!nn.contains(9)) {
-        nn.add(9);
-      }
-      neighbours.put(3, nn);
-
-      nn = neighbours.get(9);
-      if (!nn.contains(3)) {
-        nn.add(3);
-      }
-      neighbours.put(9, nn);
+      neighbours.get(3).addUsedPointNeighbour(9);
+      neighbours.get(9).addUsedPointNeighbour(3);
     }
-    
-    if (visited[7]) {
-      ArrayList<Integer> nn = neighbours.get(7);
-      if (!nn.contains(9)) {
-        nn.add(9);
-      }
-      neighbours.put(7, nn);
 
-      nn = neighbours.get(9);
-      if (!nn.contains(7)) {
-        nn.add(7);
-      }
-      neighbours.put(9, nn);
+    if (visited[7]) {
+      neighbours.get(7).addUsedPointNeighbour(9);
+      neighbours.get(9).addUsedPointNeighbour(7);
     }
   }
-
+  
   public Integer countPatterns(int firstPoint, int length) {
     if (length < 0 || length > 9) {
       return 0;
@@ -160,14 +92,12 @@ class ScreenLockinPattern implements IScreenLockinPattern {
     }
 
     addUsedPointNeighbours();
-    ArrayList<Integer> neighs = neighbours.get(firstPoint);
+    ArrayList<Integer> neighs = neighbours.get(firstPoint).getAllNeighbours();
 
-    // System.out.print(firstPoint + "-");
     Integer numPattterns = 0;
     visited[firstPoint - 1] = true;
     for (int i = 0; i < neighs.size(); i++) {
-      if (!visited[neighs.get(i) - 1]) {
-        System.out.println(firstPoint + "--> countPatterns(" + neighs.get(i) + ")");
+      if (!visited[neighs.get(i) - 1]) {  
         numPattterns += countPatterns(neighs.get(i), length - 1);
       }
     }
