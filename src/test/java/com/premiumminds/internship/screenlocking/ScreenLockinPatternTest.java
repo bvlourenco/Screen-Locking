@@ -24,13 +24,72 @@ public class ScreenLockinPatternTest {
    *
    */
   public ScreenLockinPatternTest() {
-  };
+  }
 
+  public void executeTest(int firstPoint, int length, int expectedResult) 
+      throws InterruptedException, ExecutionException, TimeoutException {
+    Future<Integer> count = new ScreenLockinPattern().countPatternsFrom(firstPoint, length);
+    Integer result = count.get(10, TimeUnit.SECONDS);
+    assertEquals(result.intValue(), expectedResult);
+  }
 
   @Test
-  public void ScreenLockinPatternTestFirst3Length2Test()  throws InterruptedException, ExecutionException, TimeoutException {
-    Future<Integer> count  = new ScreenLockinPattern().countPatternsFrom(3, 2);
-    Integer result = count.get(10, TimeUnit.SECONDS);
-    assertEquals(result.intValue(), 5);
+  public void ScreenLockinPatternTestFirst3Length0Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, 0, 0);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst3Length1Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, 1, 1);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst3LengthNeg1Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, -1, 0);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst3Length11Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, 11, 0);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst3Length2Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, 2, 5);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst2Length2Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(2, 2, 7);
+  }
+  
+  @Test
+  public void ScreenLockinPatternTestFirst5Length2Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(5, 2, 8);
+  }
+  
+  @Test
+  public void ScreenLockinPatternTestFirst3Length3Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(3, 3, 31);
+  }
+
+  @Test
+  public void ScreenLockinPatternTestFirst5Length3Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(5, 3, 48);
+  }
+  
+  @Test
+  public void ScreenLockinPatternTestFirst5Length4Test()
+      throws InterruptedException, ExecutionException, TimeoutException {
+    executeTest(5, 4, 256);
   }
 }

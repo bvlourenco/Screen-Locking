@@ -48,6 +48,11 @@ Vai ser valorizado o facto do código estar escrito de forma perceptível e orga
 * Instalar o mvn [https://maven.apache.org/install.html]
 * Correr `mvn test`
 
+If you want to run a single test inside a file, you can perform the following command:
+```bash
+$ mvn -Dtest=TestFile#TestName test
+```
+
 ## Dúvidas
 
 Quaisquer dúvidas que tenhas, cria uma issue aqui no github :)
